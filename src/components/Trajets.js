@@ -10,24 +10,22 @@ class Trajets extends React.Component {
     };
 
     parsePropsDate(myDate){
-        return moment(myDate).format("YYYYmmDD[T]HHmmss")
+        return moment(myDate).format("YYYYMMDD[T]HHmmss")
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.ready !== prevProps.ready) {
+        if (this.props.date !== prevProps.date || this.props.ville !== prevProps.ville) {
+            console.log("recherche lancée")
             this.setState({ready: this.props.ready})
-            fetch('https://api.sncf.com/v1/coverage/sncf/stop_areas/stop_area%3AOCE%3ASA%3A87581009/departures?from_datetime=20200314T000000&count=600&key=28788241-cfd6-480f-baa3-aa071e03a3c5')
+            fetch('https://api.sncf.com/v1/coverage/sncf/stop_areas/stop_area%3AOCE%3ASA%3A87581009/departures?from_datetime=' + this.parsePropsDate(this.props.date) + '&count=600&key=28788241-cfd6-480f-baa3-aa071e03a3c5')
                 .then(res => res.json())
                 .then((result) => {
-                    console.log(result)
                     let items = result.departures
-                    console.log(items)
                     this.setState({
                         isLoaded: true,
                         items
                     });
                 },
-
                 (error) => {
                     this.setState({
                         isLoaded: true,
@@ -37,15 +35,9 @@ class Trajets extends React.Component {
             )
         }
     }
-    
-    componentDidMount() {
-        if(this.state.ready === true){
-            console.log('test')
-        }
-    }
 
     parseDate(myDate){
-        return moment(myDate).format("DD/mm/YYYY - HH:mm")    
+        return moment(myDate).format("DD/MM/YYYY - HH:mm")    
     }
 
     render() {
@@ -56,9 +48,9 @@ class Trajets extends React.Component {
             } else if (!isLoaded) {
                 return <div>Chargement…</div>;
             } else {
-                console.log('lancé')
                 return (
                     <div className="résultats">
+                        <p>le {this.parseDate(this.props.date)} de {this.props.ville}</p>
                         {items.map( (item, key) => (<div key={key} className="trajets">{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)}</div>))}
                     </div>
                 );
