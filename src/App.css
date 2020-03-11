@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.résultats{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.trajets{
+  margin: 20px 5px;
+}
+
+.forms{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: solid 2px black;
+}
+
+.inputForm{
+  margin: 10px;
+}
