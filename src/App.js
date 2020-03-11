@@ -4,10 +4,11 @@ import Trajets from './components/Trajets';
 import './App.css';
 
 class App extends React.Component {
-  
+
   state = {
     date:'',
-    ville: ''
+    ville: '',
+    ready: false
   }
 
   takeProps = (data1, data2) => {
@@ -15,7 +16,8 @@ class App extends React.Component {
     console.log(data2)
     this.setState({
       date: data1,
-      ville: data2
+      ville: data2,
+      ready: true
     })
   }
 
@@ -26,7 +28,7 @@ class App extends React.Component {
           <Parameters data={this.takeProps}/>
         </div>
         <div className="trajets">
-          <Trajets ville={this.state.ville} date={this.state.date}/>
+          <Trajets ville={this.state.ville} date={this.state.date} ready={this.state.ready}/>
         </div>
       </section>
     )

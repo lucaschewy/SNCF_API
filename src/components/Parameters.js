@@ -3,7 +3,7 @@ import React from 'react';
 class Parameters extends React.Component {
     state = {
         date: '',
-        ville: ''
+        ville: '',
     }
   
     handleInputChange = event => {
