@@ -55,15 +55,7 @@
   margin: 10px;
 }
 
-.react-selectize-control{
-  display: flex;
-}
-
 #selectParameters{
   display: flex;
   align-items: center;
-}
-
-.react-selectize-placeholder .react-selectize-search-field-and-selected-values .resizable-input{
-  margin: 5px !important;
 }

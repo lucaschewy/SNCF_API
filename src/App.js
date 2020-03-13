@@ -26,14 +26,14 @@ class App extends React.Component {
   render() {
     return (
       <section>
-        <div class="wrapper">
-          <div class="background"></div>
-          <div class="rocks_1"></div>
-          <div class="rocks_2"></div>
-          <div class="rails"></div>
-          <div class="train"></div>
-          <div class="ground"></div>
-          <div class="lights"></div>
+        <div className="wrapper">
+          <div className="background"></div>
+          <div className="rocks_1"></div>
+          <div className="rocks_2"></div>
+          <div className="rails"></div>
+          <div className="train"></div>
+          <div className="ground"></div>
+          <div className="lights"></div>
         </div>
         {/* <div className="weather-icon">
           <div icon="sunny">
@@ -54,7 +54,7 @@ class App extends React.Component {
               <li></li>
             </ul>
           </div>
-        </div> */}
+        </div>  */}
         <div className="forms">
           <Parameters data={this.takeProps}/>
         </div>
