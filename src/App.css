@@ -115,3 +115,7 @@
 .react-selectize{
   margin: 0 20px !important;
 }
+
+.strong{
+  font-weight: 300;
+}

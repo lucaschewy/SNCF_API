@@ -62,7 +62,7 @@ class TrajetsDetails extends React.Component {
         return(
             <div className="trajet">
                 <p>
-                    {this.props.itemName}<br/>{this.props.time} 
+                {this.props.itemName}<br/> <span className="strong">{this.props.time}</span>
                 </p>
                 <div>
                     {this.getIcon(this.state.icon)}
