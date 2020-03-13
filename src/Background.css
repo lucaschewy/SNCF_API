@@ -1,5 +1,5 @@
 body {
-    overflow: hidden !important;    
+  
     min-height: 100vh;
     font-size: calc(.5em + 1vmin);
     display: flex;
@@ -16,19 +16,19 @@ div {
 	padding: 0 !important;
 }
 .wrapper {
-	height: 1080px;
-	width: 1920px;
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
 	margin: auto;
 	background: #280744;
-    overflow: hidden !important;
-    position: absolute;
     left: 0;
-    top: -5%;
+    top: 0;
     z-index: -100;
 }
 .background {
-	height: 1080px;
-	width: 1920px;
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QSXhkaG1VaEhSTjA
 );
 	background-repeat: repeat-x;
@@ -37,10 +37,10 @@ div {
 }
 
 .rocks_1 {
-	position: absolute;
+	position: fixed;
 	bottom: -5px;
-	height: 315px;
-	width: 1920px;
+	height: 20vh;
+	width: 100vw;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QckJsSTBOSmdsYmc);
 	background-repeat: repeat-x;
 	background-position: top center;
@@ -48,10 +48,10 @@ div {
 	animation: translateX 100s infinite linear both;
 }
 .rocks_2 {
-	position: absolute;
+	position: fixed;
 	bottom: -60px;
-	height: 315px;
-	width: 1920px;
+	height: 20vh;
+	width: 100vw;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QSC1sYnVUWUxKSGs);
 	background-repeat: repeat-x;
 	background-position: top center;
@@ -59,10 +59,10 @@ div {
 	animation: translateX 30s infinite linear both;
 }
 .rails {
-	position: absolute;
+	position: fixed;
 	bottom: -110px;
-	height: 315px;
-	width: 1920px;
+	height: 20vh;
+	width: 100vw;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QZmtCbjlIbjVwclk);
 	background-repeat: repeat-x;
 	background-position: top center;
@@ -70,10 +70,10 @@ div {
 	animation: translateX 5s infinite linear both;
 }
 .train {
-	position: absolute;
+	position: fixed;
 	bottom: -105px;
-	height: 315px;
-	width: 1500px;
+	height: 20vh;
+	width: 80vw;
 	right: 0px;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QandQOVZSTjBETGs);
 	background-repeat: no-repeat;
@@ -81,33 +81,22 @@ div {
 	background-size: contain;
 }
 .ground {
-  position: absolute;
-  width: 1920px;
-  height: 98px;
+  position: fixed;
+  width: 100vw;
+  height: 3vw;
   bottom: 0px;
   background: #16012f;
 }
 .lights {
-	position: absolute;
+	position: fixed;
 	bottom: -39px;
-	height: 315px;
-	width: 1920px;
+	height: 20vh;
+	width: 100vw;
 	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QNTJ1U2M1eFptSTA);
 	background-repeat: repeat-x;
 	background-position: top center;
 	background-size: contain;
 	animation: translateX 4s infinite linear both;
-}
-.moon {
-	position: absolute;
-	top: 20%;
-	height: 315px;
-	left: 200px;
-	width: 120px;
-	background: url(https://docs.google.com/uc?export=download&id=0B2PO2Lr7Bv2QRTVYeVFoYVppeUU);
-	background-repeat: no-repeat;
-	background-position: top center;
-	background-size: contain;
 }
 
 @keyframes translateX {

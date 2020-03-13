@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
-import Details from './Details';
+import TrajetsDetails from './TrajetDetails';
 var moment = require('moment');
 
 // let authentificationkey0 = 'fb9253e4-9288-4be5-9da6-cf5db676ae20';
@@ -22,9 +22,7 @@ class Trajets extends React.Component {
         return moment(myDate).format("YYYYMMDD[T]HHmmss")
     }
 
-    parseUnixDate(myDate){
-        return moment(myDate).format("X")  
-    }
+    
 
     parseDate(myDate){
         return moment(myDate).format("DD/MM/YYYY - HH:mm")  
@@ -54,62 +52,13 @@ class Trajets extends React.Component {
         }
     }
 
-    getDestination(stopArea){
-        fetch('https://api.sncf.com/v1/coverage/sncf/stop_areas/' + stopArea + '/stop_areas?&key=' + authentificationkey3)
-                .then(res => res.json())
-                .then( (result) => {
-                    let destination = result.stop_areas[0].coord
-                    let lat = destination.lat
-                    let long = destination.lon
-                    let timestamp = this.parseUnixDate(this.props.date)
-                   
-                    console.log("***************")
-                    console.log(this.getMeteo(lat, long, timestamp))
-                    console.log("***************")
-                    return this.getMeteo(lat, long, timestamp)  
-                })
-    }
-
-    getMeteo(lat, long, timestamp){
-        let result2 = ""
-        fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/f85a100da7b9e8977687e7b3f80cd287/' + lat + ',' + long + ',' + timestamp + '?lang=fr&units=auto&exclude=minutely,hourly')
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result)
-                let meteo = result.daily.data[0].summary
-                console.log(meteo)
-                let icon = result.daily.data[0].icon
-                console.log(icon)
-                return "test"
-                if(icon === "clear-day"){
-                    console.log('clearday')
-                    result2 = "blabla"
-                    // return <div icon="sunny"><span className="sun"></span></div>
-                }else if(icon === "partly-cloudy-day"){
-                    console.log('clearday')
-                    result2 = "blabla"
-                    // return <div icon="cloudy"><span className="cloud"></span><span className="cloud"></span></div>
-                }else if(icon === "rain"){
-                    console.log('clearday')
-                    result2 = "blabla"
-                    // return <div icon="stormy"><span className="cloud"></span><ul><li></li><li></li><li></li><li></li><li></li></ul></div>
-                }else{
-                    result2 = "blabla"
-                    console.log('clearday')
-                    // return <div icon="supermoon" data-label="Cool!"><span class="moon"></span><span class="meteor"></span></div>
-                }
-                return result2
-            }).catch( err => {
-                return "blabla"
-            })
-    }
-
     render() {
         const { error, isLoaded, ready, items } = this.state;
 
         const trajets = items.map( (item, key) => {
-                return <div key={key} className="trajets"><p>{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</p>
-                <Router>
+                // return <div key={key} className="trajets"><p>{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</p>
+                return <TrajetsDetails  key={key} itemName={item.route.name} time={this.parseDate(item.stop_date_time.departure_date_time)} directionID={item.route.direction.id} />
+                {/* <Router>
                     <Link to={"/" + item.route.name}>about</Link>
                     <Switch>
                         <Route path={"/" + item.route.name}>
@@ -119,8 +68,8 @@ class Trajets extends React.Component {
                             return <h2>test</h2>
                         </Route>
                     </Switch>
-                </Router>
-                </div>
+                </Router> */}
+                // </div>
             })
         
         if(ready === true){
@@ -138,7 +87,6 @@ class Trajets extends React.Component {
         }else{
             return (
                 <div className="notReady">
-                    <h1>Renseignez les champs</h1>
                 </div>
             )
         }

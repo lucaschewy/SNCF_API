@@ -1,6 +1,8 @@
 import React from 'react';
 import {SimpleSelect} from 'react-selectize';
+import DatePicker from "react-datepicker";
 import '../../node_modules/react-selectize/themes/index.css'
+import "react-datepicker/dist/react-datepicker.css";
 
 // let authentificationkey0 = 'fb9253e4-9288-4be5-9da6-cf5db676ae20';
 // let authentificationkey1 = 'da920f44-b8e2-4a07-a5f9-5888296ae13f';
@@ -14,16 +16,6 @@ class Parameters extends React.Component {
         date: '',
         ville: '',
         gare: []
-    }
-  
-    handleInputChange = event => {
-        const target = event.target;
-        const name = target.name;
-        const value = target.value;
-
-        this.setState({
-            [name]: value
-        });
     }
     
     handleSubmit = event => {
@@ -46,7 +38,7 @@ class Parameters extends React.Component {
                 })
             })
     }
-  
+
     render() {
         const gare  = this.state.gare;
         const gares = gare.map( (gare, key) => {
@@ -55,14 +47,11 @@ class Parameters extends React.Component {
 
         return (
             <form id="selectParameters" onSubmit={this.handleSubmit}>
-                <label className="inputForm">
-                    <input type="date" name="date" onChange={this.handleInputChange} />
-                </label>
+                <DatePicker dateFormat="dd/MM/yyyy" className="datePicker" calendarClassName="calendarDate" placeholderText="Select a date" selected={this.state.date} onChange={date => this.setState({date: date})}/>
                 <SimpleSelect placeholder="Gare de départ" onValueChange={value => this.setState({ville: value.value})} theme = "material" transitionEnter = {true} transitionLeave = {true}>
                     {gares}
                 </SimpleSelect>
-                <input type="submit" value="envoyer"/>
-                
+                <input type="submit" value="envoyer" className="button"/>
             </form>
         );
     }

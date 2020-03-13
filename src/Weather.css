@@ -20,9 +20,9 @@
   display: none;
   position: relative;
   font-size: calc(10em + 1vmin);
-  width: 1em;
-  height: 1em;
-  margin: .3em;
+  width: 0.7em;
+  height: 0.7em;
+  margin: .1em !important;
   border-radius: 100%;
   box-shadow: 0 0 0 .05em var(--ring) inset, 0 0 .3em -.03em var(--shadow);
   background: linear-gradient( to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
