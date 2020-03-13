@@ -1,5 +1,4 @@
 import React from 'react';
-import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
 var moment = require('moment');
 
 // let authentificationkey0 = 'fb9253e4-9288-4be5-9da6-cf5db676ae20';
@@ -19,6 +18,14 @@ class Trajets extends React.Component {
 
     parsePropsDate(myDate){
         return moment(myDate).format("YYYYMMDD[T]HHmmss")
+    }
+
+    parseUnixDate(myDate){
+        return moment(myDate).format("X")  
+    }
+
+    parseDate(myDate){
+        return moment(myDate).format("DD/MM/YYYY - HH:mm")  
     }
 
     componentDidUpdate(prevProps) {
@@ -52,99 +59,41 @@ class Trajets extends React.Component {
                     let destination = result.stop_areas[0].coord
                     let lat = destination.lat
                     let long = destination.lon
-                    // this.getMeteo(lat, long)
+                    let timestamp = this.parseUnixDate(this.props.date)
+                    console.log(this.getMeteo(lat, long, timestamp))
+                    return this.getMeteo(lat, long, timestamp)
                 })
     }
 
-    // getMeteo(lat, long){
-    //     fetch('https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/45.664898,3.207027,1584198000?lang=fr&units=auto&exclude=minutely,hourly')
-    //     // fetch('https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/' + lat + long + ',1584198000?lang=fr&units=auto&exclude=minutely,hourly')
-    //         .then(res => res.json())
-    //         .then((result) => {
-    //             let meteo = result.daily.data.summary
-    //             console.log(meteo)
-    //         },
-    //         )
-    // }
-
-    // getMeteo() {
-    //     <Get url="https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/45.664898,3.207027,1584198000" params={{lang: "fr"}, {units: "auto"}, {exclude: "minutely,hourly"}}>
-    //     {(error, response, isLoading, makeRequest, axios) => {
-    //       if(error) {
-    //         return (<div>Something bad happened: {error.message} <button onClick={() => makeRequest({ params: { reload: true } })}>Retry</button></div>)
-    //       }
-    //       else if(isLoading) {
-    //         return (<div>Loading...</div>)
-    //       }
-    //       else if(response !== null) {
-    //         return (<div>{response.data.message} <button onClick={() => makeRequest({ params: { refresh: true } })}>Refresh</button></div>)
-    //       }
-    //       return (<div>Default message before request is made.</div>)
-    //     }}
-    //   </Get>
-    // }
-
-
-
-
-
-
-
-
-    getMeteo(lat, long){
-        fetch('https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/45.664898,3.207027,1584198000?lang=fr&units=auto&exclude=minutely,hourly')
-        // fetch('https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/' + lat + long + ',1584198000?lang=fr&units=auto&exclude=minutely,hourly')
+    getMeteo(lat, long, timestamp){
+        fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/' + lat + ',' + long + ',' + timestamp + '?lang=fr&units=auto&exclude=minutely,hourly')
             .then(res => res.json())
             .then((result) => {
-                let meteo = result.daily.data.summary
-                let icon = result.daily.data.icon
+                console.log(result)
+                let meteo = result.daily.data[0].summary
                 console.log(meteo)
+                let icon = result.daily.data[0].icon
                 console.log(icon)
-                switch(icon){
-                    case "clear-day":
-                        return (
-                            <div icon="sunny">
-                                <span className="sun"></span>
-                            </div>
-                        )
-                    break;
-                    case "rain":
-                        return (
-                            <div icon="stormy">
-                                <span className="cloud"></span>
-                                <ul>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
-                                </ul>
-                            </div>
-                        )
-                    break;
-                    default:
-                        return (
-                            <div icon="supermoon" data-label="Cool!">
-                                <span class="moon"></span>
-                                <span class="meteor"></span>
-                            </div>
-                        )
+                if(icon === "clear-day"){
+                    return <div icon="sunny"><span className="sun"></span></div>
+                    
+                }else if(icon === "partly-cloudy-day"){
+                    return<div icon="cloudy"><span className="cloud"></span><span className="cloud"></span></div>
+                }else if(icon === "rain"){
+                    return <div icon="stormy"><span className="cloud"></span><ul><li></li><li></li><li></li><li></li><li></li></ul></div>
+                }else{
+                    return <div icon="supermoon" data-label="Cool!"><span class="moon"></span><span class="meteor"></span></div>
                 }
             },
             )
-            
     }
 
-    parseDate(myDate){
-        return moment(myDate).format("DD/MM/YYYY - HH:mm")  
-    }
 
     render() {
         const { error, isLoaded, ready, items } = this.state;
 
         const trajets = items.map( (item, key) => {
                 return <div key={key} className="trajets">{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</div>
-                // return <div key={key} className="trajets">{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} coordonnées : {this.getDestination(item.route.direction.id)} météo : {this.getMeteo()}</div>
             })
         
 
