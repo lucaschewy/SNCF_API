@@ -1,4 +1,6 @@
 import React from 'react';
+import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
+import Details from './Details';
 var moment = require('moment');
 
 // let authentificationkey0 = 'fb9253e4-9288-4be5-9da6-cf5db676ae20';
@@ -60,13 +62,17 @@ class Trajets extends React.Component {
                     let lat = destination.lat
                     let long = destination.lon
                     let timestamp = this.parseUnixDate(this.props.date)
+                   
+                    console.log("***************")
                     console.log(this.getMeteo(lat, long, timestamp))
-                    return this.getMeteo(lat, long, timestamp)
+                    console.log("***************")
+                    return this.getMeteo(lat, long, timestamp)  
                 })
     }
 
     getMeteo(lat, long, timestamp){
-        fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/' + lat + ',' + long + ',' + timestamp + '?lang=fr&units=auto&exclude=minutely,hourly')
+        let result2 = ""
+        fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/f85a100da7b9e8977687e7b3f80cd287/' + lat + ',' + long + ',' + timestamp + '?lang=fr&units=auto&exclude=minutely,hourly')
             .then(res => res.json())
             .then((result) => {
                 console.log(result)
@@ -74,29 +80,49 @@ class Trajets extends React.Component {
                 console.log(meteo)
                 let icon = result.daily.data[0].icon
                 console.log(icon)
+                return "test"
                 if(icon === "clear-day"){
-                    return <div icon="sunny"><span className="sun"></span></div>
-                    
+                    console.log('clearday')
+                    result2 = "blabla"
+                    // return <div icon="sunny"><span className="sun"></span></div>
                 }else if(icon === "partly-cloudy-day"){
-                    return<div icon="cloudy"><span className="cloud"></span><span className="cloud"></span></div>
+                    console.log('clearday')
+                    result2 = "blabla"
+                    // return <div icon="cloudy"><span className="cloud"></span><span className="cloud"></span></div>
                 }else if(icon === "rain"){
-                    return <div icon="stormy"><span className="cloud"></span><ul><li></li><li></li><li></li><li></li><li></li></ul></div>
+                    console.log('clearday')
+                    result2 = "blabla"
+                    // return <div icon="stormy"><span className="cloud"></span><ul><li></li><li></li><li></li><li></li><li></li></ul></div>
                 }else{
-                    return <div icon="supermoon" data-label="Cool!"><span class="moon"></span><span class="meteor"></span></div>
+                    result2 = "blabla"
+                    console.log('clearday')
+                    // return <div icon="supermoon" data-label="Cool!"><span class="moon"></span><span class="meteor"></span></div>
                 }
-            },
-            )
+                return result2
+            }).catch( err => {
+                return "blabla"
+            })
     }
-
 
     render() {
         const { error, isLoaded, ready, items } = this.state;
 
         const trajets = items.map( (item, key) => {
-                return <div key={key} className="trajets">{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</div>
+                return <div key={key} className="trajets"><p>{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</p>
+                <Router>
+                    <Link to={"/" + item.route.name}>about</Link>
+                    <Switch>
+                        <Route path={"/" + item.route.name}>
+                            <Details/>
+                        </Route>
+                        <Route path={"/test"}>
+                            return <h2>test</h2>
+                        </Route>
+                    </Switch>
+                </Router>
+                </div>
             })
         
-
         if(ready === true){
             if (error) {
                 return <div>Erreur : {error.message}</div>;

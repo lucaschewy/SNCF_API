@@ -58,7 +58,7 @@ class Parameters extends React.Component {
                 <label className="inputForm">
                     <input type="date" name="date" onChange={this.handleInputChange} />
                 </label>
-                <SimpleSelect placeholder="Select a fruit" onValueChange={value => this.setState({ville: value.value})} theme = "material" transitionEnter = {true} transitionLeave = {true}>
+                <SimpleSelect placeholder="Gare de départ" onValueChange={value => this.setState({ville: value.value})} theme = "material" transitionEnter = {true} transitionLeave = {true}>
                     {gares}
                 </SimpleSelect>
                 <input type="submit" value="envoyer"/>
