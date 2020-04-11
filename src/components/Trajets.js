@@ -1,4 +1,6 @@
 import React from 'react';
+import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
+import TrajetsDetails from './TrajetDetails';
 var moment = require('moment');
 
 // let authentificationkey0 = 'fb9253e4-9288-4be5-9da6-cf5db676ae20';
@@ -20,9 +22,7 @@ class Trajets extends React.Component {
         return moment(myDate).format("YYYYMMDD[T]HHmmss")
     }
 
-    parseUnixDate(myDate){
-        return moment(myDate).format("X")  
-    }
+    
 
     parseDate(myDate){
         return moment(myDate).format("DD/MM/YYYY - HH:mm")  
@@ -52,51 +52,26 @@ class Trajets extends React.Component {
         }
     }
 
-    getDestination(stopArea){
-        fetch('https://api.sncf.com/v1/coverage/sncf/stop_areas/' + stopArea + '/stop_areas?&key=' + authentificationkey3)
-                .then(res => res.json())
-                .then( (result) => {
-                    let destination = result.stop_areas[0].coord
-                    let lat = destination.lat
-                    let long = destination.lon
-                    let timestamp = this.parseUnixDate(this.props.date)
-                    console.log(this.getMeteo(lat, long, timestamp))
-                    return this.getMeteo(lat, long, timestamp)
-                })
-    }
-
-    getMeteo(lat, long, timestamp){
-        fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/c0ea17f48f58bf1ffc09a62740384ae2/' + lat + ',' + long + ',' + timestamp + '?lang=fr&units=auto&exclude=minutely,hourly')
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result)
-                let meteo = result.daily.data[0].summary
-                console.log(meteo)
-                let icon = result.daily.data[0].icon
-                console.log(icon)
-                if(icon === "clear-day"){
-                    return <div icon="sunny"><span className="sun"></span></div>
-                    
-                }else if(icon === "partly-cloudy-day"){
-                    return<div icon="cloudy"><span className="cloud"></span><span className="cloud"></span></div>
-                }else if(icon === "rain"){
-                    return <div icon="stormy"><span className="cloud"></span><ul><li></li><li></li><li></li><li></li><li></li></ul></div>
-                }else{
-                    return <div icon="supermoon" data-label="Cool!"><span class="moon"></span><span class="meteor"></span></div>
-                }
-            },
-            )
-    }
-
-
     render() {
         const { error, isLoaded, ready, items } = this.state;
 
         const trajets = items.map( (item, key) => {
-                return <div key={key} className="trajets">{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</div>
+                // return <div key={key} className="trajets"><p>{item.route.name} départ : {this.parseDate(item.stop_date_time.departure_date_time)} {this.getDestination(item.route.direction.id)}</p>
+                return <TrajetsDetails  key={key} itemName={item.route.name} time={this.parseDate(item.stop_date_time.departure_date_time)} directionID={item.route.direction.id} />
+                {/* <Router>
+                    <Link to={"/" + item.route.name}>about</Link>
+                    <Switch>
+                        <Route path={"/" + item.route.name}>
+                            <Details/>
+                        </Route>
+                        <Route path={"/test"}>
+                            return <h2>test</h2>
+                        </Route>
+                    </Switch>
+                </Router> */}
+                // </div>
             })
         
-
         if(ready === true){
             if (error) {
                 return <div>Erreur : {error.message}</div>;
@@ -112,7 +87,6 @@ class Trajets extends React.Component {
         }else{
             return (
                 <div className="notReady">
-                    <h1>Renseignez les champs</h1>
                 </div>
             )
         }

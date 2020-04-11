@@ -35,26 +35,6 @@ class App extends React.Component {
           <div className="ground"></div>
           <div className="lights"></div>
         </div>
-        {/* <div className="weather-icon">
-          <div icon="sunny">
-            <span className="sun"></span>
-          </div>
-
-          <div icon="cloudy">
-            <span className="cloud"></span>
-            <span className="cloud"></span>
-          </div>
-          <div icon="stormy">
-            <span className="cloud"></span>
-            <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </div>
-        </div>  */}
         <div className="forms">
           <Parameters data={this.takeProps}/>
         </div>

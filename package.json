@@ -13,9 +13,11 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-shallow-compare": "^15.6.0",
     "react-axios": "^2.0.3",
+    "react-datepicker": "^2.14.0",
     "react-dom": "^16.13.0",
     "react-dom-factories": "^1.0.2",
-    "react-scripts": "^3.4.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
     "react-selectize": "^3.0.1",
     "react-transition-group": "^1.1.2",
     "selectize": "^0.12.6"
