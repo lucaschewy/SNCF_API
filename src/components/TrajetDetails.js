@@ -61,7 +61,7 @@ class TrajetsDetails extends React.Component {
     render() {
         return(
             <div className="trajet">
-                <p>
+                <p className="trajetTitle">
                 {this.props.itemName}<br/> <span className="strong">{this.props.time}</span>
                 </p>
                 <div>

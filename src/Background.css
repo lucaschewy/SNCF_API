@@ -83,7 +83,7 @@ div {
 .ground {
   position: fixed;
   width: 100vw;
-  height: 3vw;
+  height: 2vh;
   bottom: 0px;
   background: #16012f;
 }

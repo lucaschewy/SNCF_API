@@ -19,7 +19,7 @@
   flex: none;
   display: none;
   position: relative;
-  font-size: calc(10em + 1vmin);
+  font-size: calc(4em + 1vmin);
   width: 0.7em;
   height: 0.7em;
   margin: .1em !important;
@@ -60,7 +60,7 @@
 [icon='stormy'] {
   --shadow: #34c6d8;
   --blend1: #4b9cc2;
-  --blend2: #9adbd9;
+  --blend2: #0d47a1;
 }
 
 /* SUNNY */
@@ -265,7 +265,7 @@
 [icon='stormy'] li::before,
 [icon='stormy'] li::after {
   position: absolute;
-  width: .005em;
+  width: .015em;
   height: .02em;
   border-radius: 10%;
   background-color: #eee;

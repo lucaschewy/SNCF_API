@@ -51,7 +51,7 @@ class Parameters extends React.Component {
                 <SimpleSelect placeholder="Gare de départ" onValueChange={value => this.setState({ville: value.value})} theme = "material" transitionEnter = {true} transitionLeave = {true}>
                     {gares}
                 </SimpleSelect>
-                <input type="submit" value="envoyer" className="button"/>
+                <a href="#" class="fancy-button bg-gradient1" onClick={this.handleSubmit}><span>Partir</span></a>
             </form>
         );
     }
